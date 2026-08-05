@@ -31,7 +31,7 @@
  RPM_Cmd_Args=" -qa --queryformat"
  RPM_Cmd_QueryFmt=" '%{SIZE} %{NAME}\n' | sort -n -r | head -n 25"
 
- QuertyFmt_Size="%{SIZE}"
+ QueryFmt_Size="%{SIZE}"
  QueryFmt_Name="%{NAME}\n"
 
  QueryFmt_All="sort -nr | head -n"
@@ -77,9 +77,9 @@ function DisplayFunctions() {
 	echo "  Static_Query_1:	No variables, sizes in BYTES." 
 	echo "  Static_Query_1:	No variables, sizes in MB."
 	echo "--------------------------------------------------------------"
-	echo "  Hybrid_Query_1:	Currently BROKEN. "
-	echo "  Hybrid_Query_2:	Works, superceded by Hybrid_Query_3. "
-	echo "  Hybrid_Query_3:	Works, current best option. "
+	echo "  Hybrid_Query_1:	Works, currently the best option. "
+	echo "  Hybrid_Query_2:	Works, superceded by Hybrid_Query_1. "
+	echo "  Hybrid_Query_3:	Works, superceded by Hybrid_Query_1. "
 	echo "--------------------------------------------------------------"
 	echo "  Dynamic_Query_1:	All variables, currently BROKEN. "
 	echo "  Dynamic_Query_2:	All variables, currently BROKEN. "
@@ -112,23 +112,23 @@ function Static_Query_2() {
 # Hybrid Query Functions #
 #--------------------------------------------------------------------------------------------------------------------------------------#
 
-# As of Aug 4, 2026, this function is BROKEN.
+# As of Aug 4, 2026, this is the best function, and works perfectly.
 function Hybrid_Query_1() {
-	# $RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
-	# $RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | sort -nr | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
-	 $RPM_Cmd $RPM_Cmd_Args $RPM_Cmd_QueryFmt_All | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+	# $RPM_Cmd "$RPM_Cmd_Args" '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+	# $RPM_Cmd "$RPM_Cmd_Args" '%{SIZE} %{NAME}\n' | sort -nr | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+	 $RPM_Cmd "$RPM_Cmd_Args" "$RPM_Cmd_QueryFmt" | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 }
 
 # As of Aug 4, 2026, this function works perfectly.  It has been superceded by function Hybrid_Query_2.
 function Hybrid_Query_2() {
-	$RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | sort -nr | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+	$RPM_Cmd "$RPM_Cmd_Args" '%{SIZE} %{NAME}\n' | sort -nr | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 }
 
 
 # As of Aug 4, 2026, this is the best function, and works perfectly.
 function Hybrid_Query_3() {
-	### $RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
-	$RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+	### $RPM_Cmd "$RPM_Cmd_Args" '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+	$RPM_Cmd "$RPM_Cmd_Args" '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 }
 
 #--------------------------------------------------------------------------------------------------------------------------------------#
