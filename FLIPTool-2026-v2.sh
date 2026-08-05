@@ -31,7 +31,7 @@
  RPM_Cmd_Args=" -qa --queryformat"
  RPM_Cmd_QueryFmt=" '%{SIZE} %{NAME}\n' | sort -n -r | head -n 25"
 
- QuertyFmt_Size="%{SIZE}"
+ QueryFmt_Size="%{SIZE}"
  QueryFmt_Name="%{NAME}\n"
 
  QueryFmt_All="sort -nr | head -n"
@@ -116,7 +116,7 @@ function Static_Query_2() {
 function Hybrid_Query_1() {
 	# $RPM_Cmd "$RPM_Cmd_Args" '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 	# $RPM_Cmd "$RPM_Cmd_Args" '%{SIZE} %{NAME}\n' | sort -nr | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
-	 $RPM_Cmd "$RPM_Cmd_Args" "$RPM_Cmd_QueryFmt_All" | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+	 $RPM_Cmd "$RPM_Cmd_Args" "$RPM_Cmd_QueryFmt" | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 }
 
 # As of Aug 4, 2026, this function works perfectly.  It has been superceded by function Hybrid_Query_2.
