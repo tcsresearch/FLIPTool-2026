@@ -127,7 +127,7 @@ function Hybrid_Query_2() {
 
 # As of Aug 4, 2026, this is the best function, and works perfectly.
 function Hybrid_Query_3() {
-	### $RPM_Cmd "$RPM_Cmd_Args" '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+### $RPM_Cmd "$RPM_Cmd_Args" '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 	$RPM_Cmd "$RPM_Cmd_Args" '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 }
 
