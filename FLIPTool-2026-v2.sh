@@ -25,36 +25,36 @@
 ## Define Variables ##																	      #
 ###############################################################################################################################################################
 
-FLIPTool_Version="08.26-r3"
+ FLIPTool_Version="08.26-r3"
 
-RPM_Cmd="rpm"
-RPM_Cmd_Args=" -qa --queryformat"
-RPM_Cmd_QueryFmt=" '%{SIZE} %{NAME}\n' | sort -n -r | head -n 25"
+ RPM_Cmd="rpm"
+ RPM_Cmd_Args=" -qa --queryformat"
+ RPM_Cmd_QueryFmt=" '%{SIZE} %{NAME}\n' | sort -n -r | head -n 25"
 
-QuertyFmt_Size="%{SIZE}"
-QueryFmt_Name="%{NAME}\n"
+ QuertyFmt_Size="%{SIZE}"
+ QueryFmt_Name="%{NAME}\n"
 
-QueryFmt_All="sort -nr | head -n"
-QueryFmt_Sort="sort -nr"
-QueryFmt_Head="head -n"
+ QueryFmt_All="sort -nr | head -n"
+ QueryFmt_Sort="sort -nr"
+ QueryFmt_Head="head -n"
 
-NumberOfPkgs="25"
+ NumberOfPkgs="25"
 
 
 # Awk Definitions #
 # FIXME: None of these work, probably due to the need to figure out how to properly specify variables that contain double quotes, commas, etc.
 
-Printf_Args_All="\"%.2f MB - %s\\n\", \$1/1048576, \$2" # Corrected by Google AI on Aug 4, 2026.
+ Printf_Args_All="\"%.2f MB - %s\\n\", \$1/1048576, \$2" # Corrected by Google AI on Aug 4, 2026.
 
-Printf_Args1="%.2f MB - %s\n" # Corrected by Google AI on Aug 4, 2026.
-Printf_Args2="\$1/1048576, \$2"
+ Printf_Args1="%.2f MB - %s\n" # Corrected by Google AI on Aug 4, 2026.
+ Printf_Args2="\$1/1048576, \$2"
 
 # FIXME: This won't work due to the variable having quotes while enclosed within quotes.
 # Awk_Args="printf "Printf_Args1 $Printf_Args2"
 
 ### This command throws an error.  
 #   FIXME: Encapsulate variables correctly.
-Awk_Args='awk '\''{printf "%.2f MB - %s\n", $1/1048576, $2}'\''' # Corrected by Google AI on Aug 4, 2026.
+ Awk_Args='awk '\''{printf "%.2f MB - %s\n", $1/1048576, $2}'\''' # Corrected by Google AI on Aug 4, 2026.
 
 
 ## NOTE ##
@@ -77,14 +77,14 @@ function DisplayFunctions() {
 	echo "  Static_Query_1:	No variables, sizes in BYTES." 
 	echo "  Static_Query_1:	No variables, sizes in MB."
 	echo "--------------------------------------------------------------"
-	echo "  Hybrid_Query_1: Currently BROKEN. "
+	echo "  Hybrid_Query_1:	Currently BROKEN. "
 	echo "  Hybrid_Query_2:	Works, superceded by Hybrid_Query_3. "
 	echo "  Hybrid_Query_3:	Works, current best option. "
 	echo "--------------------------------------------------------------"
-	echo "  Dynamic_Query_1: All variables, currently BROKEN. "
-	echo "  Dynamic_Query_2: All variables, currently BROKEN. "
-	echo "  Dynamic_Query_3: All variables, currently BROKEN. "
-	echo "  Dynamic_Query_4: All variables, currently BROKEN. "
+	echo "  Dynamic_Query_1:	All variables, currently BROKEN. "
+	echo "  Dynamic_Query_2:	All variables, currently BROKEN. "
+	echo "  Dynamic_Query_3:	All variables, currently BROKEN. "
+	echo "  Dynamic_Query_4:	All variables, currently BROKEN. "
 	echo "--------------------------------------------------------------"
 	echo "  "
 }
@@ -116,7 +116,7 @@ function Static_Query_2() {
 function Hybrid_Query_1() {
 	# $RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 	# $RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | sort -nr | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
-	# $RPM_Cmd $RPM_Cmd_Args $RPM_Cmd_QueryFmt_All | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+	 $RPM_Cmd $RPM_Cmd_Args $RPM_Cmd_QueryFmt_All | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 }
 
 # As of Aug 4, 2026, this function works perfectly.  It has been superceded by function Hybrid_Query_2.
@@ -161,8 +161,8 @@ function Dynamic_Query_4() {
 # Main Program #																	      #
 ###############################################################################################################################################################
 
-DisplayBanner
-DisplayFunctions
+ DisplayBanner
+ DisplayFunctions
 
 ## Hybrid_Query_3
 
