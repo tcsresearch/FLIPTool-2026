@@ -2,7 +2,7 @@
 
 # FLIPTool-2026-v4.sh -  This command provides a clear, sorted list of the largest packages installed on your Fedora/CentOS system. 
 
-# shellcheck disable=SC2034
+# shellcheck disable=SC2034,SC2016
 
 ###############################################################################################################################################################
 ### Command Breakdown ###																      #
