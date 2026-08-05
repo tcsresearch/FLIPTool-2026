@@ -25,7 +25,7 @@
 ## Define Variables ##																	      #
 ###############################################################################################################################################################
 
-FLIPTool_Version="08.26-r2"
+FLIPTool_Version="08.26-r3"
 
 RPM_Cmd="rpm"
 RPM_Cmd_Args=" -qa --queryformat"
@@ -44,9 +44,9 @@ NumberOfPkgs="25"
 # Awk Definitions #
 # FIXME: None of these work, probably due to the need to figure out how to properly specify variables that contain double quotes, commas, etc.
 
-Printf_Args_All="%.2f MB - %s\n, \$1/1048576, \$2"
+Printf_Args_All="\"%.2f MB - %s\\n\", \$1/1048576, \$2" # Corrected by Google AI on Aug 4, 2026.
 
-Printf_Args1="%.2f MB - %s\n,"
+Printf_Args1="%.2f MB - %s\n" # Corrected by Google AI on Aug 4, 2026.
 Printf_Args2="\$1/1048576, \$2"
 
 # FIXME: This won't work due to the variable having quotes while enclosed within quotes.
@@ -54,7 +54,8 @@ Printf_Args2="\$1/1048576, \$2"
 
 ### This command throws an error.  
 #   FIXME: Encapsulate variables correctly.
-## Awk_Args="awk '{printf "%.2f MB - %s\n", $1/1048576, $2}' "
+Awk_Args='awk '\''{printf "%.2f MB - %s\n", $1/1048576, $2}'\''' # Corrected by Google AI on Aug 4, 2026.
+
 
 ## NOTE ##
 # The awk command changes the output from 'bytes' to 'megabytes' akin to using 'ls -hl' vs 'ls -l'
