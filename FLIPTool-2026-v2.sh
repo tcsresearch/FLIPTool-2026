@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+# FLIPTool-2026-v2.sh -  This command provides a clear, sorted list of the largest packages installed on your Fedora/CentOS system. 
+
 # shellcheck disable=SC2034
 
 ###############################################################################################################################################################
@@ -12,18 +14,18 @@
 
 #    | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}': Uses awk to convert the size from bytes (the %{SIZE} output) to megabytes 
 #    							(by dividing by 1048576, which is 1024*1024) and formats the output to two decimal places. 
-
-# This command provides a clear, sorted list of the largest packages installed on your Fedora system. 
-
 ###############################################################################################################################################################
 
-
-
+# TODO: Enable Cecho.
+#	    Enable SplitConfig.
+#		Create CASE Statement for Query Options (Temporary).
+#		Create CASE Statement to allow for specifying $NumberOfPkgs via --pkgs.
+	
 ###############################################################################################################################################################
 ## Define Variables ##																	      #
 ###############################################################################################################################################################
 
-FLIPTool_Version="08.26"
+FLIPTool_Version="08.26-r2"
 
 RPM_Cmd="rpm"
 RPM_Cmd_Args=" -qa --queryformat"
@@ -47,7 +49,7 @@ Printf_Args_All="%.2f MB - %s\n, \$1/1048576, \$2"
 Printf_Args1="%.2f MB - %s\n,"
 Printf_Args2="\$1/1048576, \$2"
 
-# This won't work due to the variable having quotes while enclosed within quotes.
+# FIXME: This won't work due to the variable having quotes while enclosed within quotes.
 # Awk_Args="printf "Printf_Args1 $Printf_Args2"
 
 ### This command throws an error.  
@@ -68,9 +70,32 @@ function DisplayBanner() {
 	echo " "
 }
 
+function DisplayFunctions() {
+	echo "FLIPTool-2026-v2 Options: "
+	echo "--------------------------------------------------------------"
+	echo "  Static_Query_1:	No variables, sizes in BYTES." 
+	echo "  Static_Query_1:	No variables, sizes in MB."
+	echo "--------------------------------------------------------------"
+	echo "  Hybrid_Query_1: Currently BROKEN. "
+	echo "  Hybrid_Query_2:	Works, superceded by Hybrid_Query_3. "
+	echo "  Hybrid_Query_3:	Works, current best option. "
+	echo "--------------------------------------------------------------"
+	echo "  Dynamic_Query_1: All variables, currently BROKEN. "
+	echo "  Dynamic_Query_2: All variables, currently BROKEN. "
+	echo "  Dynamic_Query_3: All variables, currently BROKEN. "
+	echo "  Dynamic_Query_4: All variables, currently BROKEN. "
+	echo "--------------------------------------------------------------"
+	echo "  "
+}
+
+
 ####################################################################################################################################
 # QUERY FUNCTIONS #														   #
 ####################################################################################################################################
+
+#--------------------------------------------------------------------------------------------------------------------------------------#
+# Static Query Functions #
+#--------------------------------------------------------------------------------------------------------------------------------------#
 
 function Static_Query_1() {
 #  Original Command - WITHOUT Awk #
@@ -82,24 +107,32 @@ function Static_Query_2() {
 	 rpm -qa --queryformat '%{SIZE} %{NAME}\n' | sort -nr | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 }
 
+#--------------------------------------------------------------------------------------------------------------------------------------#
+# Hybrid Query Functions #
+#--------------------------------------------------------------------------------------------------------------------------------------#
 
-# As of Aug 4, 2026, this function works perfectly.
+# As of Aug 4, 2026, this function is BROKEN.
 function Hybrid_Query_1() {
+	# $RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+	# $RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | sort -nr | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+	# $RPM_Cmd $RPM_Cmd_Args $RPM_Cmd_QueryFmt_All | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+}
+
+# As of Aug 4, 2026, this function works perfectly.  It has been superceded by function Hybrid_Query_2.
+function Hybrid_Query_2() {
 	$RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | sort -nr | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 }
 
+
 # As of Aug 4, 2026, this is the best function, and works perfectly.
-function Hybrid_Query_2() {
-	# $RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
-	# $RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | sort -nr | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
+function Hybrid_Query_3() {
 	### $RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | head -n 25 | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
 	$RPM_Cmd $RPM_Cmd_Args '%{SIZE} %{NAME}\n' | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
-	# $RPM_Cmd $RPM_Cmd_Args $RPM_Cmd_QueryFmt_All | $QueryFmt_Sort | $QueryFmt_Head $NumberOfPkgs | awk '{printf "%.2f MB - %s\n", $1/1048576, $2}'
-
-
-
 }
 
+#--------------------------------------------------------------------------------------------------------------------------------------#
+# Dynamic Query Functions #
+#--------------------------------------------------------------------------------------------------------------------------------------#
 
 function Dynamic_Query_1() {
 ### Final Query To Fix ###
@@ -122,31 +155,13 @@ function Dynamic_Query_4() {
 }
 
 
-function DisplayFunctions() {
-	echo "Options: "
-	echo "  Static_Query_1 "
-	echo "  Static_Query_1 "
-	echo "  Hybrid_Query_1 "
-	echo "  Hybrid_Query_2 "
-	echo "  Dynamic_Query_1 "
-	echo "  Dynamic_Query_2 "
-	echo "  Dynamic_Query_3 "
-	echo "  Dynamic_Query_4 "
-	echo "  "
-}
 
 ###############################################################################################################################################################
 # Main Program #																	      #
 ###############################################################################################################################################################
 
 DisplayBanner
-
 DisplayFunctions
 
-## Hybrid_Query_2
-
-# Query1
-# Query2
-# Query3
-# Query4
+## Hybrid_Query_3
 
