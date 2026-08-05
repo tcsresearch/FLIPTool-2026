@@ -31,5 +31,16 @@ Find Largest Installed Packages (FLIP) Tool For Fedora/CentOS
   </details>
 </div>
 
+<hr>
+
+<div id="ShellCheck">
+<p> <h4> ShellCheck Compliance </h4>
+  :white_check_mark: This code was verified as ShellCheck compliant as of 08/04/2026. <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Code added after this date may or may not remain in compliance.
+</p>
+</div>
+<hr>
+
+
 
 
