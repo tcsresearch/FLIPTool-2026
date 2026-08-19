@@ -1,3 +1,7 @@
+<h4> 
+  This workflow uses a standard Fedora/RHEL container to run the native rpmbuild -bs command, which ensures maximum reliability and compatibility with standard packaging guidelines without relying on unverified third-party marketplace actions.
+</h5>
+
 ### Key Requirements Checklist
 To make this workflow run successfully, ensure your repository contains the following:
 - A valid .spec file: Change your-package.spec in the workflow to match your actual filename.
