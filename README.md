@@ -24,7 +24,7 @@ Find Largest Installed Packages (FLIP) Tool For Fedora/CentOS
     </summary>
     <ul>
       <li> Finish Cecho-like outpiut via Colors.conf. </li> 
-      <li> Finish SplitConfig Feature (Initial Split Completed / Need To Code Sourcing Features). </li> 
+      <li> Finish SplitConfig Feature in FLIPTool-2026-v5.sh (Initial Split Completed / Need To Code Sourcing Features). </li> 
       <li> Create CASE statement for output options, such as changing $NumberOfPkgs via --pkgs. </li> 
       <li> Finish troubleshooting issues displaying output of Dynamic_Query functions ($PrintF_Args and $Awk_Args have incorrect syntax). </li> 
   </ul>
