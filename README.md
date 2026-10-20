@@ -1,3 +1,5 @@
+<img src="https://github.com/tcsresearch/FLIPTool-2026/blob/main/FLIPTool_Logo.jpg">
+
 # FLIPTool-2026
 Find Largest Installed Packages (FLIP) Tool For Fedora/CentOS
 
